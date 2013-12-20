@@ -1,0 +1,1 @@
+mongod --dbpath /Users/DeepDattaRoy/Documents/Development/Combination/Ledger/Back-End/Database

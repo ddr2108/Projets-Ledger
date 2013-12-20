@@ -45,8 +45,9 @@ def processMessages(messages):
             insertDB(messagePieces)
             sendSMS("Transaction Added")
         elif (len(messagePieces)==2 and messagePieces[0].lower() =="ledger"):
-            #data = requestDB(messagePieces)
-            sendSMS("asd")
+            data = requestDB(messagePieces)
+            textToSend = "Spent: $" + str(data)
+            sendSMS(textToSend)
 
 #insert new info into ledger
 def insertDB(messagePieces):
@@ -57,9 +58,16 @@ def insertDB(messagePieces):
 
 #get data from ledger to send as SMS
 def requestDB(messagePieces):
-        #mongo_collection.find({     'last_name': 'Doe' })
+    client = MongoClient(ip, port)      #open up connection to db
+    db = client.ledger                  #choose the database
+    collection = db.data
 
-    a = 1
+    total = 0                            #initialize amount
+    datas = collection.find()            #get data that matches the desired
+    for data in datas:
+        total = total + int(data['amount'])
+
+    return total   
 
 #send requested data via SMS
 def sendSMS(data):

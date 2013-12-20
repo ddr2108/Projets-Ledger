@@ -7,10 +7,14 @@ from pymongo import MongoClient
 
 ###############################################################################
 ########################Initial Setup##########################################
+#Google Voice
 source = "Deep Datta Roy:"      #holds the number which is the source
 number = "4045148059"           #the actual number
 email = "deepdattaroy8888@gmail.com"    #login info
 pwd = "5891Deep"
+#Database
+ip = 'localhost'
+port = 27017
 ###############################################################################
 ###############################################################################
 
@@ -46,15 +50,15 @@ def processMessages(messages):
 
 #insert new info into ledger
 def insertDB(messagePieces):
-    #client = MongoClient('localhost', 27017)
-    #db = client.test_database
-    #collection = db.test_collection
-    #collection.insert(({     'first_name': 'John',     'last_name': 'Doe',     'dob': {         'month': 5,         'day': 14,         'year': 1984     } })
-    #mongo_collection.find({     'last_name': 'Doe' })
-    a = 1
+    client = MongoClient(ip, port)      #open up connection to db
+    db = client.ledger                  #choose the database
+    collection = db.data
+    collection.insert({'card': messagePieces[1], 'category': messagePieces[2],'amount': messagePieces[3]})
 
 #get data from ledger to send as SMS
 def requestDB(messagePieces):
+        #mongo_collection.find({     'last_name': 'Doe' })
+
     a = 1
 
 #send requested data via SMS

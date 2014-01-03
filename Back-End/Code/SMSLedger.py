@@ -11,7 +11,7 @@ from pymongo import MongoClient
 source = "Deep Datta Roy:"      #holds the number which is the source
 number = "4045148059"           #the actual number
 email = "deepdattaroy8888@gmail.com"    #login info
-pwd = "5891Deep"
+pwd = "####"
 #Database
 ip = 'localhost'
 port = 27017
@@ -40,7 +40,8 @@ def processMessages(messages):
     #Break each message into words
     for message in messages:
         messagePieces = message.split()
-        #if 3 words, do more processing
+        print 1
+        #if 4 words, do more processing
         if (len(messagePieces)==4 and messagePieces[0].lower() =="ledger"):
             insertDB(messagePieces)
             sendSMS("Transaction Added")
@@ -65,8 +66,8 @@ def requestDB(messagePieces):
     total = 0                            #initialize amount
     datas = collection.find()            #get data that matches the desired
     for data in datas:
-        total = total + int(data['amount'])
-
+        #total = total + int(data['amount'])
+        total = len(datas)
     return total   
 
 #send requested data via SMS
